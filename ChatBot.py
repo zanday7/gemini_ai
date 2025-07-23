@@ -2,29 +2,36 @@
 from colorama import init, Fore, Style
 import google.generativeai as genai
 import sys
-import requests
 
-# ===== Masukkan API Key Gemini langsung di sini =====
+init(autoreset=True)
+
+# ===== API KEY =====
 API_KEY = "AIzaSyDA2GJPS71Zh6UmJ33dGItP3e7NkY2oKZA"
-
-# ===== Konfigurasi model Gemini =====
 genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel("gemini-2.0-flash")
+
+# ===== Inisialisasi model dan chat session =====
+model = genai.GenerativeModel("gemini-2.0")
+chat = model.start_chat(history=[])
 
 def ask_bot(prompt):
-    response = model.generate_content(prompt)
+    try:
+        response = chat.send_message(prompt)
+        print("\n\033[1;32m================= Jawaban Chatbot =====================\033[0m\n")
 
-    print("\n\033[1;32m================= Jawaban Chatbot =====================\033[0m\n")
-    
-    if hasattr(response, "parts"):  # kadang Gemini mengembalikan dalam potongan
-        for part in response.parts:
-            print(f"{Fore.GREEN}{Style.BRIGHT}{part.text}")
-    else:
-        print(f"{Fore.GREEN}{Style.BRIGHT}{response.text}")
+        if hasattr(response, "parts"):
+            for part in response.parts:
+                print(f"{Fore.GREEN}{Style.BRIGHT}{part.text}")
+        else:
+            print(f"{Fore.GREEN}{Style.BRIGHT}{response.text}")
+    except Exception as e:
+        print(Fore.RED + "[ERROR] Terjadi kesalahan:")
+        print(Fore.RED + str(e))
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Masukkan prompt sebagai argumen!")
-    else:
-        user_input = " ".join(sys.argv[1:])
+    print("Selamat datang di Chatbot Gemini!\nKetik 'exit' untuk keluar.\n")
+    while True:
+        user_input = input("Anda: ")
+        if user_input.lower() in ['exit', 'quit']:
+            print("Bot: Sampai jumpa!")
+            break
         ask_bot(user_input)
