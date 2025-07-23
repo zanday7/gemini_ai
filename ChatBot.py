@@ -10,7 +10,7 @@ API_KEY = "AIzaSyDA2GJPS71Zh6UmJ33dGItP3e7NkY2oKZA"
 genai.configure(api_key=API_KEY)
 
 # ===== Inisialisasi model dan chat session =====
-model = genai.GenerativeModel("gemini-2.0")
+model = genai.GenerativeModel("gemini-2.0-flash")
 chat = model.start_chat(history=[])
 
 def ask_bot(prompt):
