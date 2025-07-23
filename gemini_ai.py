@@ -19,4 +19,4 @@ if __name__ == "__main__":
         print("Masukkan prompt sebagai argumen!")
     else:
         user_input = " ".join(sys.argv[1:])
-        gemini_ai(user_input)
+        ask_gemini(user_input)
