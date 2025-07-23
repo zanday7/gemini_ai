@@ -13,8 +13,14 @@ model = genai.GenerativeModel("gemini-2.0-flash")
 
 def ask_bot(prompt):
     response = model.generate_content(prompt)
+
     print("\n\033[1;32m================= Jawaban Chatbot =====================\033[0m\n")
-    print(f"{Fore.GREEN}{Style.BRIGHT}{response.text}")
+    
+    if hasattr(response, "parts"):  # kadang Gemini mengembalikan dalam potongan
+        for part in response.parts:
+            print(f"{Fore.GREEN}{Style.BRIGHT}{part.text}")
+    else:
+        print(f"{Fore.GREEN}{Style.BRIGHT}{response.text}")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
