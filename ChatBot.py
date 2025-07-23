@@ -11,7 +11,7 @@ API_KEY = "AIzaSyDA2GJPS71Zh6UmJ33dGItP3e7NkY2oKZA"
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel("gemini-2.0-flash")
 
-def ask_gemini(prompt):
+def ask_bot(prompt):
     response = model.generate_content(prompt)
     print("\n\033[1;32m================= Jawaban Chatbot =====================\033[0m\n")
     print(f"{Fore.GREEN}{Style.BRIGHT}{response.text}")
@@ -21,4 +21,4 @@ if __name__ == "__main__":
         print("Masukkan prompt sebagai argumen!")
     else:
         user_input = " ".join(sys.argv[1:])
-        ask_gemini(user_input)
+        ask_bot(user_input)
